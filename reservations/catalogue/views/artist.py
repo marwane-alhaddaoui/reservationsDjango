@@ -3,6 +3,7 @@ from django.http import Http404
 from catalogue.models import Artist
 from catalogue.forms.ArtistForm import ArtistForm
 from django.contrib import messages
+from django.conf import settings
 
 # Create your views here.
 def index(request):
@@ -54,6 +55,8 @@ def edit(request, artist_id):
         'artist' : artist,
     })
 def create(request):
+    if not request.user.is_authenticated or not request.user.has_perm('add_artist'):
+                        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     form = ArtistForm(request.POST or None)
     
     if request.method == 'POST':
