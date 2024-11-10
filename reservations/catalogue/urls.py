@@ -2,6 +2,8 @@
 """
 from django.urls import path
 from . import views
+from django.contrib import admin
+from .models import Artist
 
 app_name='catalogue'
 
@@ -10,5 +12,11 @@ urlpatterns = [
     path('artist/<int:artist_id>', views.artist.show, name='artist-show'),
     path('artist/edit/<int:artist_id>', views.artist.edit, name='artist-edit'),
     path('artist/create', views.artist.create, name='artist-create'),
-    path('artist/delete/<int:artist_id>/', views.artist.delete, name='artist-delete'),  
+    path('artist/delete/<int:artist_id>/', views.artist.delete, name='artist-delete'),
+    path('admin/', admin.site.urls),  
 ]
+
+admin.site.index_title = "Projet Réservations"
+admin.site.index_header = "Projet Réservations HEADER"
+admin.site.site_title = "Spectacles"
+admin.site.register(Artist)
