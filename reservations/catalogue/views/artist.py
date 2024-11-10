@@ -83,5 +83,3 @@ def delete(request, artist_id):
     return render(request, 'artist/show.html', {
         'artist' : artist,
     })
-
-
