@@ -74,13 +74,18 @@ WSGI_APPLICATION = 'reservations.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+import os
+from dotenv import load_dotenv
+
+# Charge les variables d'environnement depuis le fichier .env
+load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'reservations',
         'USER': 'root',
-        'PASSWORD':",
+        'PASSWORD':os.getenv('MYSQL_PASSWORD', ''),
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
