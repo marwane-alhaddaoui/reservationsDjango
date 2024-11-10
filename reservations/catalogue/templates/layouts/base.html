@@ -7,7 +7,7 @@
 <body>
     <nav>
     <ul>
-        <li><a href="">Accueil</a></li>
+        <li><a href="{% url 'home' %}">Accueil</a></li>
         <li><a href="{% url 'catalogue:artist-index' %}">Nos artistes</a></li>
         <li><a href="{% url 'admin:index' %}">Administration</a></li>
     </ul>
@@ -17,7 +17,7 @@
             <div style="float:right">
                 {% if request.user.is_authenticated %}
                 <p>Bonjour {{ request.user.username }}!</p>
-                <p><a href="{% url 'password_change' %}">Réinitialiser le mot de passe</a></p>
+                <p><a href="{% url 'accounts:user-profile' %}">Mon profil</a></p>
             
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
@@ -25,7 +25,6 @@
                 </form>
                 {% else %}
                 <p>Vous n'êtes pas connecté.</p>
-                <p><a href="{% url 'password_change' %}">Réinitialiser le mot de passe</a></p>
                 <p><a href="{% url 'login' %}">Se connecter</a></p>
                 <p><a href="{% url 'accounts:user-signup' %}">S'inscrire</a></p>
                 {% endif %}
