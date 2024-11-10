@@ -19,4 +19,3 @@ urlpatterns = [
 admin.site.index_title = "Projet Réservations"
 admin.site.index_header = "Projet Réservations HEADER"
 admin.site.site_title = "Spectacles"
-admin.site.register(Artist)
