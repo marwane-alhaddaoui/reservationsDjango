@@ -8,7 +8,9 @@ from accounts.forms.UserSignUpForm import UserSignUpForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import UserUpdateForm
-
+from django.contrib.auth import logout
+from accounts.forms.UserUpdateForm import UserUpdateForm
+from django.contrib.auth import login, logout
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = User
@@ -35,6 +37,7 @@ class UserSignUpView(UserPassesTestMixin, CreateView):
     def handle_no_permission(self):
         messages.error(self.request, "Vous êtes déjà inscrit!")
         return redirect('home')
+    
 @login_required
 def profile(request):
     languages = {
@@ -43,6 +46,15 @@ def profile(request):
         "nl": "Nederlands",
     }
 
-    return render(request, 'profile.html', {
+    return render(request, 'user/profile.html', {
         "user_language" : languages[request.user.usermeta.langue],
     })
+
+@login_required
+def delete(request, pk):
+    if request.method == 'POST':
+        user = User.objects.get(id=pk)
+        user.delete()
+
+        logout(request)
+        return redirect('home')
