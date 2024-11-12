@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from catalogue.models import UserMeta
 from django.db import models
 
+
 class UserUpdateForm(UserChangeForm):
     class Language(models.TextChoices):
         NONE = "", "Choisissez votre langue"
@@ -11,14 +12,14 @@ class UserUpdateForm(UserChangeForm):
         ENGLISH = "en", "English"
         DUTCH = "nl", "Nederlands"
 
-    #Définir les types de champs
+    # Définir les types de champs
     username = forms.CharField(max_length=30)
     first_name = forms.CharField(max_length=60)
     last_name = forms.CharField(max_length=60)
     email = forms.EmailField()
     password = None
 
-    #Ajout des champs de données personnelles supplémentaires
+    # Ajout des champs de données personnelles supplémentaires
     langue = forms.ChoiceField(choices=Language)
 
     def __init__(self, *args, **kwargs):
@@ -28,7 +29,7 @@ class UserUpdateForm(UserChangeForm):
         self.fields['last_name'].label = 'Nom'
 
         self.fields['username'].help_text = None
-        #Récupérer les metadonnées de l'utilisateur
+        # Récupérer les metadonnées de l'utilisateur
         user = kwargs.get('instance')
         self.initial['langue'] = user.usermeta.langue
 
@@ -42,7 +43,7 @@ class UserUpdateForm(UserChangeForm):
             'last_name',
             'langue',
         ]
- 
+
     def save(self, commit=True):
         user = super(UserUpdateForm, self).save(commit=False)
         user.save()

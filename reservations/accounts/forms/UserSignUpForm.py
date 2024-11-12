@@ -22,7 +22,7 @@ class UserSignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         # Personnalisation des labels et des aides
         self.fields['password1'].label = 'Mot de passe'
         self.fields['password2'].label = 'Confirmation du mot de passe'
@@ -41,10 +41,10 @@ class UserSignUpForm(UserCreationForm):
             'last_name',
             'langue',
         ]
-        
+
     def save(self, commit=True):
         user = super(UserSignUpForm, self).save(commit=False)
-        
+
         # Sauvegarde de l'utilisateur
         if commit:
             user.save()
@@ -52,10 +52,11 @@ class UserSignUpForm(UserCreationForm):
             # Ajout de l'utilisateur au groupe MEMBER
             memberGroup, created = Group.objects.get_or_create(name='MEMBER')
             memberGroup.user_set.add(user)
-            
+
             # Ajout des métadonnées utilisateur (langue)
             if self.cleaned_data['langue']:
-                user_meta = UserMeta(user=user, langue=self.cleaned_data['langue'])
+                user_meta = UserMeta(
+                    user=user, langue=self.cleaned_data['langue'])
                 user_meta.save()
-        
+
         return user

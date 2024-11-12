@@ -10,14 +10,19 @@ admin.site.register(Artist)
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
+
+
 class UserMetaInline(admin.StackedInline):
     model = UserMeta
     can_delete = False
     verbose_name_plural = "user_meta"
 
 # Define a new User admin
+
+
 class UserAdmin(BaseUserAdmin):
     inlines = [UserMetaInline]
+
 
 # Re-register UserAdmin
 admin.site.unregister(User)

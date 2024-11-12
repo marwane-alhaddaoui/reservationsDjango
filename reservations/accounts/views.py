@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import redirect,render
+from django.shortcuts import redirect, render
 from django.contrib import messages
 from accounts.forms.UserSignUpForm import UserSignUpForm
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from accounts.forms.UserUpdateForm import UserUpdateForm
 from django.contrib.auth import login, logout
 
+
 class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
@@ -20,11 +21,14 @@ class UserUpdateView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         pkInURL = self.kwargs['pk']
-        return self.request.user.is_authenticated and self.request.user.id==pkInURL or self.request.user.is_superuser
+        return self.request.user.is_authenticated and self.request.user.id == pkInURL or self.request.user.is_superuser
 
     def handle_no_permission(self):
-        messages.error(self.request, "Vous n'avez pas l'autorisation d'accéder à cette page!")
+        messages.error(
+            self.request,
+            "Vous n'avez pas l'autorisation d'accéder à cette page!")
         return redirect('accounts:user-profile')
+
 
 class UserSignUpView(UserPassesTestMixin, CreateView):
     form_class = UserSignUpForm
@@ -33,11 +37,12 @@ class UserSignUpView(UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_anonymous or self.request.user.is_superuser
-    
+
     def handle_no_permission(self):
         messages.error(self.request, "Vous êtes déjà inscrit!")
         return redirect('home')
-    
+
+
 @login_required
 def profile(request):
     languages = {
@@ -47,8 +52,9 @@ def profile(request):
     }
 
     return render(request, 'user/profile.html', {
-        "user_language" : languages[request.user.usermeta.langue],
+        "user_language": languages[request.user.usermeta.langue],
     })
+
 
 @login_required
 def delete(request, pk):

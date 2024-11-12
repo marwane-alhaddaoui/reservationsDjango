@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from dotenv import load_dotenv
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,8 +77,6 @@ WSGI_APPLICATION = 'reservations.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-import os
-from dotenv import load_dotenv
 
 # Charge les variables d'environnement depuis le fichier .env
 load_dotenv()
@@ -86,9 +86,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'reservations',
         'USER': 'root',
-        'PASSWORD':os.getenv('MYSQL_PASSWORD', ''),
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
@@ -135,7 +135,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#...
+# ...
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'

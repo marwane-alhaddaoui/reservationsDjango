@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserSignUpView,profile,UserUpdateView,delete
+from .views import UserSignUpView, profile, UserUpdateView, delete
 
 app_name = 'accounts'
 

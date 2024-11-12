@@ -23,14 +23,14 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('catalogue/', include('catalogue.urls')),
-    
+
     path(
         "admin/password_reset/",
         auth_views.PasswordResetView.as_view(
             extra_context={"site_header": admin.site.site_header}
         ),
         name="admin_password_reset",
-        ),
+    ),
     path(
         "admin/password_reset/done/",
         auth_views.PasswordResetDoneView.as_view(
@@ -52,7 +52,7 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
-     path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
 
 ]
