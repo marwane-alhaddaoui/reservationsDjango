@@ -11,6 +11,7 @@ class Show(models.Model):
    created_in = models.PositiveSmallIntegerField(null=True)  # Permet NULL
    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='shows')
    bookable = models.BooleanField(default=True, null=True)  # Permet NULL
+   price = models.DecimalField(decimal_places=2, max_digits=10, null=True)  # Nouveau champ price
    created_at = models.DateTimeField(auto_now_add=True, null=True)  # Permet NULL
    updated_at = models.DateTimeField(auto_now=True, null=True)  # Permet NULL
     
