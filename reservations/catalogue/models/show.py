@@ -19,6 +19,13 @@ class Show(models.Model):
    price = models.DecimalField(decimal_places=2, max_digits=10, null=True)  # Nouveau champ price
    created_at = models.DateTimeField(auto_now_add=True, null=True)  # Permet NULL
    updated_at = models.DateTimeField(auto_now=True, null=True)  # Permet NULL
+artist_types = models.ManyToManyField(
+        "ArtistType",
+        through="ArtistTypeShow",
+        related_name="shows",
+    )
+
+   
    
 objects = ShowManager()
     
