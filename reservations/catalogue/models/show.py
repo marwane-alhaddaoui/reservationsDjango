@@ -1,6 +1,11 @@
 from django.db import models
 from .location import *
 
+class ShowManager(models.Manager):
+    def get_by_natural_key(self, slug, created_at):
+        return self.get(slug=slug, created_at=created_at)
+
+
 # Create your models here.
 class Show(models.Model):
    slug = models.CharField(max_length=60, unique=True)
@@ -14,9 +19,20 @@ class Show(models.Model):
    price = models.DecimalField(decimal_places=2, max_digits=10, null=True)  # Nouveau champ price
    created_at = models.DateTimeField(auto_now_add=True, null=True)  # Permet NULL
    updated_at = models.DateTimeField(auto_now=True, null=True)  # Permet NULL
+   
+objects = ShowManager()
     
 def __str__(self):
         return self.title
     
 class Meta:
         db_table = "shows"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["slug", "created_at"],
+                name="unique_slug_created_at",
+            ),
+        ]
+
+def natural_key(self):
+        return (self.slug, self.created_at)
